@@ -28,6 +28,7 @@ import code.name.monkey.retromusic.interfaces.IMusicServiceEventListener
 import code.name.monkey.retromusic.model.*
 import code.name.monkey.retromusic.repository.RealRepository
 import code.name.monkey.retromusic.util.DensityUtil
+import code.name.monkey.retromusic.util.GenreUtil
 import code.name.monkey.retromusic.util.PreferenceUtil
 import code.name.monkey.retromusic.util.logD
 import kotlinx.coroutines.Dispatchers.IO
@@ -78,7 +79,7 @@ class LibraryViewModel(
 
     fun getPlaylists(): LiveData<List<PlaylistWithSongs>> = playlists
 
-    fun getGenre(): LiveData<List<Genre>> = genres
+    fun getGenre(): LiveData<List<GenreSplit>> = genres.map { GenreUtil.splitGenres(it) }
 
     fun getHome(): LiveData<List<Home>> = home
 

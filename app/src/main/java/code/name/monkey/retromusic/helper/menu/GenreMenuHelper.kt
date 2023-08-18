@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentActivity
 import code.name.monkey.retromusic.R
 import code.name.monkey.retromusic.dialogs.AddToPlaylistDialog
 import code.name.monkey.retromusic.helper.MusicPlayerRemote
-import code.name.monkey.retromusic.model.Genre
+import code.name.monkey.retromusic.model.GenreSplit
 import code.name.monkey.retromusic.model.Song
 import code.name.monkey.retromusic.repository.GenreRepository
 import code.name.monkey.retromusic.repository.RealRepository
@@ -33,7 +33,7 @@ import org.koin.core.component.inject
 
 object GenreMenuHelper : KoinComponent {
     private val genreRepository by inject<GenreRepository>()
-    fun handleMenuClick(activity: FragmentActivity, genre: Genre, item: MenuItem): Boolean {
+    fun handleMenuClick(activity: FragmentActivity, genre: GenreSplit, item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_play -> {
                 MusicPlayerRemote.openQueue(getGenreSongs(genre), 0, true)
@@ -61,7 +61,7 @@ object GenreMenuHelper : KoinComponent {
         return false
     }
 
-    private fun getGenreSongs(genre: Genre): List<Song> {
-        return genreRepository.songs(genre.id)
+    private fun getGenreSongs(genre: GenreSplit): List<Song> {
+        return genre.id.flatMap { genreRepository.songs(it) }
     }
 }

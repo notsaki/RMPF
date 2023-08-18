@@ -19,7 +19,6 @@ import org.koin.core.component.KoinComponent
 
 object GenreUtil : KoinComponent {
     private val splitters = listOf(";", "/", ",")
-    const val genreIdSplitter = ";"
 
     fun splitGenres(genres: List<Genre>): List<GenreSplit> {
         return genres
@@ -27,7 +26,7 @@ object GenreUtil : KoinComponent {
             .groupBy({ it.first }) { it.second }
             .map {
                 GenreSplit(
-                    it.value.map { genre -> genre.id }.joinToString(";"),
+                    it.value.map { genre -> genre.id },
                     it.key,
                     it.value.sumOf { genre -> genre.songCount },
                 )

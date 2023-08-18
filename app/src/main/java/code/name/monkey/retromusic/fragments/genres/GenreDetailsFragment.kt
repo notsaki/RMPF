@@ -31,7 +31,7 @@ import code.name.monkey.retromusic.databinding.FragmentPlaylistDetailBinding
 import code.name.monkey.retromusic.extensions.dipToPix
 import code.name.monkey.retromusic.fragments.base.AbsMainActivityFragment
 import code.name.monkey.retromusic.helper.menu.GenreMenuHelper
-import code.name.monkey.retromusic.model.Genre
+import code.name.monkey.retromusic.model.GenreSplit
 import code.name.monkey.retromusic.model.Song
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.transition.MaterialSharedAxis
@@ -43,7 +43,7 @@ class GenreDetailsFragment : AbsMainActivityFragment(R.layout.fragment_playlist_
     private val detailsViewModel: GenreDetailsViewModel by viewModel {
         parametersOf(arguments.extraGenre)
     }
-    private lateinit var genre: Genre
+    private lateinit var genre: GenreSplit
     private lateinit var songAdapter: SongAdapter
     private var _binding: FragmentPlaylistDetailBinding? = null
     private val binding get() = _binding!!
