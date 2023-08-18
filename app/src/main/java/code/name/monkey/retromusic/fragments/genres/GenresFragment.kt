@@ -31,6 +31,8 @@ import code.name.monkey.retromusic.fragments.ReloadType
 import code.name.monkey.retromusic.fragments.base.AbsRecyclerViewFragment
 import code.name.monkey.retromusic.interfaces.IGenreClickListener
 import code.name.monkey.retromusic.model.Genre
+import code.name.monkey.retromusic.model.GenreSplit
+import code.name.monkey.retromusic.util.GenreUtil
 import code.name.monkey.retromusic.util.RetroUtil
 import com.google.android.material.transition.MaterialSharedAxis
 
@@ -41,11 +43,21 @@ GenresFragment : AbsRecyclerViewFragment<GenreAdapter, LinearLayoutManager>(),
         super.onViewCreated(view, savedInstanceState)
         libraryViewModel.getGenre().observe(viewLifecycleOwner) {
             if (it.isNotEmpty())
-                adapter?.swapDataSet(it)
+                adapter?.swapDataSet(genreSplitToGenre(GenreUtil.splitGenres(it)))
             else
                 adapter?.swapDataSet(listOf())
         }
     }
+
+    // Temporary method to keep the view working.
+    private fun genreSplitToGenre(genres: List<GenreSplit>) = genres
+        .map {
+            Genre(
+                it.id.split(GenreUtil.genreIdSplitter).firstOrNull()?.toLongOrNull() ?: 0,
+                it.name,
+                it.songCount,
+            )
+        }
 
     override fun createLayoutManager(): LinearLayoutManager {
         return if (RetroUtil.isLandscape) {
