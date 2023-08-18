@@ -74,4 +74,11 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_language_name"
         app:icon="@drawable/ic_language" />
+
+    <code.name.monkey.retromusic.preferences.TagSeparatorsPreference
+            android:key="tag_separators"
+            android:layout="@layout/list_item_view"
+            android:summary="@string/pref_tag_separators_summary"
+            android:title="@string/pref_tag_separators_title"
+            app:icon="@drawable/ic_tag" />
 </androidx.preference.PreferenceScreen>

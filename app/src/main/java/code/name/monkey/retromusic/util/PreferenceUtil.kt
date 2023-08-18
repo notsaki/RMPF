@@ -20,6 +20,7 @@ import code.name.monkey.retromusic.fragments.NowPlayingScreen
 import code.name.monkey.retromusic.fragments.folder.FoldersFragment
 import code.name.monkey.retromusic.helper.SortOrder.*
 import code.name.monkey.retromusic.model.CategoryInfo
+import code.name.monkey.retromusic.model.TagSeparatorInfo
 import code.name.monkey.retromusic.transform.*
 import code.name.monkey.retromusic.util.theme.ThemeMode
 import code.name.monkey.retromusic.views.TopAppBarLayout
@@ -44,6 +45,14 @@ object PreferenceUtil {
         CategoryInfo(CategoryInfo.Category.Search, false)
     )
 
+    val defaultTagSeparators = listOf(
+        TagSeparatorInfo(TagSeparatorInfo.TagSeparator.Semicolon, false),
+        TagSeparatorInfo(TagSeparatorInfo.TagSeparator.Slash, false),
+        TagSeparatorInfo(TagSeparatorInfo.TagSeparator.Comma, false),
+        TagSeparatorInfo(TagSeparatorInfo.TagSeparator.Plus, false),
+        TagSeparatorInfo(TagSeparatorInfo.TagSeparator.Ampersand, false),
+    )
+
     var libraryCategory: List<CategoryInfo>
         get() {
             val gson = Gson()
@@ -64,6 +73,29 @@ object PreferenceUtil {
             val collectionType = object : TypeToken<List<CategoryInfo?>?>() {}.type
             sharedPreferences.edit {
                 putString(LIBRARY_CATEGORIES, Gson().toJson(value, collectionType))
+            }
+        }
+
+    var tagSeparators: List<TagSeparatorInfo>
+        get() {
+            val gson = Gson()
+            val collectionType = object : TypeToken<List<TagSeparatorInfo>>() {}.type
+
+            val data = sharedPreferences.getStringOrDefault(
+                TAG_SEPARATORS,
+                gson.toJson(defaultTagSeparators, collectionType)
+            )
+            return try {
+                Gson().fromJson(data, collectionType)
+            } catch (e: JsonSyntaxException) {
+                e.printStackTrace()
+                return defaultTagSeparators
+            }
+        }
+        set(value) {
+            val collectionType = object : TypeToken<List<TagSeparatorInfo?>?>() {}.type
+            sharedPreferences.edit {
+                putString(TAG_SEPARATORS, Gson().toJson(value, collectionType))
             }
         }
 

@@ -86,6 +86,10 @@ abstract class AbsSettingsFragment : ATEPreferenceFragmentCompat() {
                 val fragment = LibraryPreferenceDialog.newInstance()
                 fragment.show(childFragmentManager, preference.key)
             }
+            is TagSeparatorsPreference -> {
+                val fragment = TagSeparatorsPreferenceDialog.newInstance()
+                fragment.show(childFragmentManager, preference.key)
+            }
             is NowPlayingScreenPreference -> {
                 val fragment = NowPlayingScreenPreferenceDialog.newInstance()
                 fragment.show(childFragmentManager, preference.key)
