@@ -28,7 +28,7 @@ import code.name.monkey.retromusic.glide.RetroGlideExtension.asBitmapPalette
 import code.name.monkey.retromusic.glide.RetroGlideExtension.songCoverOptions
 import code.name.monkey.retromusic.glide.RetroMusicColoredTarget
 import code.name.monkey.retromusic.interfaces.IGenreClickListener
-import code.name.monkey.retromusic.model.GenreSplit
+import code.name.monkey.retromusic.model.GenreInfo
 import code.name.monkey.retromusic.util.MusicUtil
 import code.name.monkey.retromusic.util.color.MediaNotificationProcessor
 import com.bumptech.glide.Glide
@@ -40,7 +40,7 @@ import java.util.*
 
 class GenreAdapter(
     private val activity: FragmentActivity,
-    var dataSet: List<GenreSplit>,
+    var dataSet: List<GenreInfo>,
     private val listener: IGenreClickListener
 ) : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
 
@@ -49,7 +49,7 @@ class GenreAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return dataSet[position].getId()
+        return dataSet[position].firstId
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -68,8 +68,8 @@ class GenreAdapter(
         loadGenreImage(genre, holder)
     }
 
-    private fun loadGenreImage(genre: GenreSplit, holder: GenreAdapter.ViewHolder) {
-        val genreSong = MusicUtil.songByGenre(genre.getId())
+    private fun loadGenreImage(genre: GenreInfo, holder: GenreAdapter.ViewHolder) {
+        val genreSong = MusicUtil.songByGenre(genre.firstId)
         Glide.with(activity)
             .asBitmapPalette()
             .songCoverOptions(genreSong)
@@ -94,7 +94,7 @@ class GenreAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun swapDataSet(list: List<GenreSplit>) {
+    fun swapDataSet(list: List<GenreInfo>) {
         dataSet = list
         notifyDataSetChanged()
     }

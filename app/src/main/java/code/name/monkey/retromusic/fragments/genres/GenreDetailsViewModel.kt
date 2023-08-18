@@ -19,7 +19,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import code.name.monkey.retromusic.interfaces.IMusicServiceEventListener
-import code.name.monkey.retromusic.model.GenreSplit
+import code.name.monkey.retromusic.model.GenreInfo
 import code.name.monkey.retromusic.model.Song
 import code.name.monkey.retromusic.repository.RealRepository
 import kotlinx.coroutines.Dispatchers.IO
@@ -29,24 +29,19 @@ import kotlinx.coroutines.withContext
 
 class GenreDetailsViewModel(
     private val realRepository: RealRepository,
-    private val genre: GenreSplit
+    private val genre: GenreInfo
 ) : ViewModel(), IMusicServiceEventListener {
 
     private val _playListSongs = MutableLiveData<List<Song>>()
-    private val _genre = MutableLiveData<GenreSplit>().apply {
-        postValue(genre)
-    }
 
     fun getSongs(): LiveData<List<Song>> = _playListSongs
-
-    fun getGenre(): LiveData<GenreSplit> = _genre
 
     init {
         loadGenreSongs(genre)
     }
 
-    private fun loadGenreSongs(genre: GenreSplit) = viewModelScope.launch(IO) {
-        val songs = genre.id.flatMap { realRepository.getGenre(it) }
+    private fun loadGenreSongs(genre: GenreInfo) = viewModelScope.launch(IO) {
+        val songs = genre.ids.flatMap { realRepository.getGenre(it) }
         withContext(Main) { _playListSongs.postValue(songs) }
     }
 

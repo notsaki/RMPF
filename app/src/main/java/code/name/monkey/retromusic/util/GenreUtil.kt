@@ -14,11 +14,11 @@
 package code.name.monkey.retromusic.util
 
 import code.name.monkey.retromusic.model.Genre
-import code.name.monkey.retromusic.model.GenreSplit
+import code.name.monkey.retromusic.model.GenreInfo
 import org.koin.core.component.KoinComponent
 
 object GenreUtil : KoinComponent {
-    fun splitGenres(genres: List<Genre>): List<GenreSplit> {
+    fun splitGenres(genres: List<Genre>): List<GenreInfo> {
         val splitters = PreferenceUtil.tagSeparators
             .filter { it.isChecked }
             .map { it.tagSeparator.separator }
@@ -27,7 +27,7 @@ object GenreUtil : KoinComponent {
             .flatMap { createPairsFromGenre(splitters, it) }
             .groupBy({ it.first }) { it.second }
             .map {
-                GenreSplit(
+                GenreInfo(
                     it.value.map { genre -> genre.id },
                     it.key,
                     it.value.sumOf { genre -> genre.songCount },

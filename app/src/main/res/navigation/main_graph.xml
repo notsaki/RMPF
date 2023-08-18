@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_playlist_detail">
         <argument
             android:name="extra_genre"
-            app:argType="code.name.monkey.retromusic.model.GenreSplit" />
+            app:argType="code.name.monkey.retromusic.model.GenreInfo" />
     </fragment>
 
     <fragment

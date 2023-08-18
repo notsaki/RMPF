@@ -33,6 +33,8 @@ interface GenreRepository {
 
     fun songs(genreId: Long): List<Song>
 
+    fun songs(genreIds: List<Long>): List<Song>
+
     fun song(genreId: Long): Song
 }
 
@@ -55,6 +57,10 @@ class RealGenreRepository(
         return if (genreId == -1L) {
             getSongsWithNoGenre()
         } else songRepository.songs(makeGenreSongCursor(genreId))
+    }
+
+    override fun songs(genreIds: List<Long>): List<Song> {
+        return genreIds.flatMap { songs(it) }
     }
 
     override fun song(genreId: Long): Song {

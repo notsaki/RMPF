@@ -30,7 +30,8 @@ import code.name.monkey.retromusic.extensions.setUpMediaRouteButton
 import code.name.monkey.retromusic.fragments.ReloadType
 import code.name.monkey.retromusic.fragments.base.AbsRecyclerViewFragment
 import code.name.monkey.retromusic.interfaces.IGenreClickListener
-import code.name.monkey.retromusic.model.GenreSplit
+import code.name.monkey.retromusic.model.GenreInfo
+import code.name.monkey.retromusic.util.GenreUtil
 import code.name.monkey.retromusic.util.RetroUtil
 import com.google.android.material.transition.MaterialSharedAxis
 
@@ -41,7 +42,7 @@ GenresFragment : AbsRecyclerViewFragment<GenreAdapter, LinearLayoutManager>(),
         super.onViewCreated(view, savedInstanceState)
         libraryViewModel.getGenre().observe(viewLifecycleOwner) {
             if (it.isNotEmpty())
-                adapter?.swapDataSet(it)
+                adapter?.swapDataSet(GenreUtil.splitGenres(it))
             else
                 adapter?.swapDataSet(listOf())
         }
@@ -96,7 +97,7 @@ GenresFragment : AbsRecyclerViewFragment<GenreAdapter, LinearLayoutManager>(),
         }
     }
 
-    override fun onClickGenre(genre: GenreSplit, view: View) {
+    override fun onClickGenre(genre: GenreInfo, view: View) {
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).addTarget(requireView())
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
         findNavController().navigate(

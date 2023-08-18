@@ -79,7 +79,7 @@ class LibraryViewModel(
 
     fun getPlaylists(): LiveData<List<PlaylistWithSongs>> = playlists
 
-    fun getGenre(): LiveData<List<GenreSplit>> = genres.map { GenreUtil.splitGenres(it) }
+    fun getGenre(): LiveData<List<Genre>> = genres
 
     fun getHome(): LiveData<List<Home>> = home
 

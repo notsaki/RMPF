@@ -18,13 +18,10 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class GenreSplit(
-    val id: List<Long>,
+data class GenreInfo(
+    val ids: List<Long>,
     val name: String,
-    val songCount: Int
+    val songCount: Int,
 ) : Parcelable {
-
-    fun getId(): Long = id.firstOrNull() ?: 0
-
-    fun toGenre(): Genre = Genre(id.firstOrNull() ?: 0, name, songCount)
+    val firstId get() = ids.first() ?: 0
 }
