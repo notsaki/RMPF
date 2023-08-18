@@ -39,5 +39,6 @@ object GenreUtil : KoinComponent {
 private fun createPairsFromGenre(splitters: List<String>, genre: Genre): List<Pair<String, Genre>> {
     return genre.name
         .split(*splitters.toTypedArray())
+        .map { it.trim() }
         .map { genreName -> Pair(genreName, genre) }
 }
