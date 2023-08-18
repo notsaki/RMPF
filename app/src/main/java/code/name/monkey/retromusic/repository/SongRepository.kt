@@ -135,6 +135,11 @@ class RealSongRepository(private val context: Context) : SongRepository {
         val year = cursor.getInt(AudioColumns.YEAR)
         val duration = cursor.getLong(AudioColumns.DURATION)
         val data = cursor.getString(Constants.DATA)
+        cursor.columnNames.contains(AudioColumns.DATE_ADDED)
+        // TODO: Add date_added column in all DB tables.
+        val dateAdded =
+            if (cursor.columnNames.contains(AudioColumns.DATE_ADDED)) cursor.getLong(AudioColumns.DATE_ADDED)
+            else cursor.getLong(AudioColumns.DATE_MODIFIED)
         val dateModified = cursor.getLong(AudioColumns.DATE_MODIFIED)
         val albumId = cursor.getLong(AudioColumns.ALBUM_ID)
         val albumName = cursor.getStringOrNull(AudioColumns.ALBUM)
@@ -149,6 +154,7 @@ class RealSongRepository(private val context: Context) : SongRepository {
             year,
             duration,
             data,
+            dateAdded,
             dateModified,
             albumId,
             albumName ?: "",

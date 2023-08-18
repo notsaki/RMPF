@@ -47,13 +47,14 @@ object Constants {
         MediaStore.Audio.AudioColumns.YEAR, // 3
         MediaStore.Audio.AudioColumns.DURATION, // 4
         DATA, // 5
-        MediaStore.Audio.AudioColumns.DATE_MODIFIED, // 6
-        MediaStore.Audio.AudioColumns.ALBUM_ID, // 7
-        MediaStore.Audio.AudioColumns.ALBUM, // 8
-        MediaStore.Audio.AudioColumns.ARTIST_ID, // 9
-        MediaStore.Audio.AudioColumns.ARTIST, // 10
-        MediaStore.Audio.AudioColumns.COMPOSER, // 11
-        ALBUM_ARTIST // 12
+        MediaStore.Audio.AudioColumns.DATE_ADDED, // 6
+        MediaStore.Audio.AudioColumns.DATE_MODIFIED, // 7
+        MediaStore.Audio.AudioColumns.ALBUM_ID, // 8
+        MediaStore.Audio.AudioColumns.ALBUM, // 9
+        MediaStore.Audio.AudioColumns.ARTIST_ID, // 10
+        MediaStore.Audio.AudioColumns.ARTIST, // 11
+        MediaStore.Audio.AudioColumns.COMPOSER, // 12
+        ALBUM_ARTIST // 13
     )
     const val NUMBER_OF_TOP_TRACKS = 99
 }

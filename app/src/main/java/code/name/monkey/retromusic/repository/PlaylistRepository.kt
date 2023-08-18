@@ -149,6 +149,7 @@ class RealPlaylistRepository(
         val year = cursor.getInt(AudioColumns.YEAR)
         val duration = cursor.getLong(AudioColumns.DURATION)
         val data = cursor.getString(Constants.DATA)
+        val dateAdded = cursor.getLong(AudioColumns.DATE_ADDED)
         val dateModified = cursor.getLong(AudioColumns.DATE_MODIFIED)
         val albumId = cursor.getLong(AudioColumns.ALBUM_ID)
         val albumName = cursor.getString(AudioColumns.ALBUM)
@@ -164,6 +165,7 @@ class RealPlaylistRepository(
             year,
             duration,
             data,
+            dateAdded,
             dateModified,
             albumId,
             albumName,
@@ -203,14 +205,15 @@ class RealPlaylistRepository(
                 AudioColumns.YEAR, // 3
                 AudioColumns.DURATION, // 4
                 Constants.DATA, // 5
-                AudioColumns.DATE_MODIFIED, // 6
-                AudioColumns.ALBUM_ID, // 7
-                AudioColumns.ALBUM, // 8
-                AudioColumns.ARTIST_ID, // 9
-                AudioColumns.ARTIST, // 10
-                Members._ID,//11
-                AudioColumns.COMPOSER,//12
-                "album_artist"//13
+                AudioColumns.DATE_ADDED, // 6
+                AudioColumns.DATE_MODIFIED, // 7
+                AudioColumns.ALBUM_ID, // 8
+                AudioColumns.ALBUM, // 9
+                AudioColumns.ARTIST_ID, // 10
+                AudioColumns.ARTIST, // 11
+                Members._ID,//12
+                AudioColumns.COMPOSER,//13
+                "album_artist"//14
             ), Constants.IS_MUSIC, null, Members.DEFAULT_SORT_ORDER
         )
     }

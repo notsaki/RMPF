@@ -25,6 +25,7 @@ import code.name.monkey.retromusic.extensions.getStringOrNull
 import code.name.monkey.retromusic.model.Genre
 import code.name.monkey.retromusic.model.Song
 import code.name.monkey.retromusic.util.PreferenceUtil
+import code.name.monkey.retromusic.util.SortUtil
 
 interface GenreRepository {
     fun genres(query: String): List<Genre>
@@ -44,11 +45,11 @@ class RealGenreRepository(
 ) : GenreRepository {
 
     override fun genres(query: String): List<Genre> {
-        return getGenresFromCursor(makeGenreCursor(query))
+        return getGenresFromCursor(makeGenreSongCursor(query))
     }
 
     override fun genres(): List<Genre> {
-        return getGenresFromCursor(makeGenreCursor())
+        return getGenresFromCursor(makeGenreSongCursor())
     }
 
     override fun songs(genreId: Long): List<Song> {
@@ -60,7 +61,10 @@ class RealGenreRepository(
     }
 
     override fun songs(genreIds: List<Long>): List<Song> {
-        return genreIds.flatMap { songs(it) }
+        // Fetching songs by multiple genre IDs requires higher API level.
+        return genreIds
+            .flatMap { songs(it) }
+            .let { SortUtil.sortSongsByPreference(it) }
     }
 
     override fun song(genreId: Long): Song {
@@ -121,7 +125,7 @@ class RealGenreRepository(
         return genres
     }
 
-    private fun makeGenreCursor(): Cursor? {
+    private fun makeGenreSongCursor(): Cursor? {
         val projection = arrayOf(Genres._ID, Genres.NAME)
         return try {
             contentResolver.query(
@@ -136,7 +140,7 @@ class RealGenreRepository(
         }
     }
 
-    private fun makeGenreCursor(query: String): Cursor? {
+    private fun makeGenreSongCursor(query: String): Cursor? {
         val projection = arrayOf(Genres._ID, Genres.NAME)
         return try {
             contentResolver.query(

@@ -25,6 +25,7 @@ open class Song(
     open val year: Int,
     open val duration: Long,
     open val data: String,
+    open val dateAdded: Long,
     open val dateModified: Long,
     open val albumId: Long,
     open val albumName: String,
@@ -48,6 +49,7 @@ open class Song(
         if (year != other.year) return false
         if (duration != other.duration) return false
         if (data != other.data) return false
+        if (dateAdded != other.dateAdded) return false
         if (dateModified != other.dateModified) return false
         if (albumId != other.albumId) return false
         if (albumName != other.albumName) return false
@@ -66,6 +68,7 @@ open class Song(
         result = 31 * result + year
         result = 31 * result + duration.hashCode()
         result = 31 * result + data.hashCode()
+        result = 31 * result + dateAdded.hashCode()
         result = 31 * result + dateModified.hashCode()
         result = 31 * result + albumId.hashCode()
         result = 31 * result + albumName.hashCode()
@@ -87,6 +90,7 @@ open class Song(
             year = -1,
             duration = -1,
             data = "",
+            dateAdded = -1,
             dateModified = -1,
             albumId = -1,
             albumName = "",

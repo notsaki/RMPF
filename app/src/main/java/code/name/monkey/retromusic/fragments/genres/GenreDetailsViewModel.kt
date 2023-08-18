@@ -41,7 +41,7 @@ class GenreDetailsViewModel(
     }
 
     private fun loadGenreSongs(genre: GenreInfo) = viewModelScope.launch(IO) {
-        val songs = genre.ids.flatMap { realRepository.getGenre(it) }
+        val songs = realRepository.getGenres(genre.ids)
         withContext(Main) { _playListSongs.postValue(songs) }
     }
 
