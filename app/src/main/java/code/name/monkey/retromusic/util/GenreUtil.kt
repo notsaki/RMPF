@@ -33,6 +33,7 @@ object GenreUtil : KoinComponent {
                     it.value.sumOf { genre -> genre.songCount },
                 )
             }
+            .let { simplifyGenres(it) }
     }
 }
 
@@ -41,4 +42,29 @@ private fun createPairsFromGenre(splitters: List<String>, genre: Genre): List<Pa
         .split(*splitters.toTypedArray())
         .map { it.trim() }
         .map { genreName -> Pair(genreName, genre) }
+}
+
+private fun simplifyGenres(genres: List<GenreInfo>): List<GenreInfo> {
+    return genres
+        .groupBy {
+            it.name
+                // e.g. Rhythm & Blues, Rhythm n Blues, Rhythm and Blues should be considered the same genre.
+                .replace("&|and".toRegex(), "n")
+                .lowercase()
+                .replace("[^a-zA-Z0-9_]".toRegex(), "")
+                // Remove all spaces.
+                .replace("\\s+".toRegex(), "")
+                // Special cases:
+                .replace("rhythmnblues", "rnb")
+                .replace("rap", "hip hop")
+        }
+        .map {
+            GenreInfo(
+                it.value.flatMap { genre -> genre.ids },
+                // All genre names are similar on each group, so we can just pick the first element to represent
+                // all the variants.
+                it.value.first().name,
+                it.value.sumOf { genre -> genre.songCount },
+            )
+        }
 }
